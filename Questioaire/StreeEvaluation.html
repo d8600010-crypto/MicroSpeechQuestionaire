@@ -1,1 +1,122 @@
 
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>專注力與壓力自我評估</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    line-height: 1.6;
+}
+h2 {
+    color: #2c3e50;
+}
+.question {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f4f6f7;
+    border-radius: 8px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🧠 專注力與壓力自我評估</h2>
+<p>請依最近2週狀況作答：</p>
+<p>A=幾乎沒有 / B=偶爾 / C=經常 / D=幾乎每天</p>
+
+<form id="quizForm"></form>
+
+<button onclick="calculateScore()">查看結果</button>
+
+<div id="result" class="result"></div>
+
+<script>
+const questions = [
+"需要靠某些固定習慣才能開始專心工作",
+"工作一段時間後，很快注意力下降",
+"中途會想離開座位",
+"常覺得卡住但說不上原因",
+"需要重開機才能繼續工作",
+"入睡前腦袋停不下來",
+"睡很久仍覺得疲累",
+"半夜容易醒來",
+"起床後難以進入狀態",
+"下午特別容易疲倦",
+"壓力大時有固定放鬆方式",
+"沒有該方式會更煩躁",
+"有時只是習慣去做某件事",
+"短暫舒服後又回到原狀",
+"覺得壓力恢復能力變差",
+"覺得沒有完全掌控某些習慣",
+"減少某習慣會不舒服",
+"會自我說服「一下沒關係」",
+"曾想改變但沒成功",
+"覺得有隱形開關影響狀態"
+];
+
+const options = ["A", "B", "C", "D"];
+const scores = {A:0, B:1, C:2, D:3};
+
+const form = document.getElementById("quizForm");
+
+questions.forEach((q, i) => {
+    let div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `<b>${i+1}. ${q}</b><br>` +
+        options.map(opt =>
+            `<label><input type="radio" name="q${i}" value="${opt}"> ${opt}</label>`
+        ).join(" ");
+    form.appendChild(div);
+});
+
+function calculateScore() {
+    let total = 0;
+
+    for (let i = 0; i < questions.length; i++) {
+        let selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!selected) {
+            alert("請完成所有題目！");
+            return;
+        }
+        total += scores[selected.value];
+    }
+
+    let interpretation = "";
+
+    if (total <= 15) {
+        interpretation = "自我調節能力良好，但仍可能有隱性壓力來源。";
+    } else if (total <= 30) {
+        interpretation = "開始出現依賴型調節，專注與恢復可能已受影響。";
+    } else if (total <= 45) {
+        interpretation = "已形成習慣迴路，建議調整行為或尋求協助。";
+    } else {
+        interpretation = "高度依賴狀態，可能已影響大腦運作與生活品質。";
+    }
+
+    document.getElementById("result").innerHTML =
+        `<h3>你的總分：${total} 分</h3>
+         <p>${interpretation}</p>
+         <p><b>提醒：</b>你不一定需要更努力，而是可能需要重新拿回對狀態的控制權。</p>`;
+}
+</script>
+
+</body>
+</html>
