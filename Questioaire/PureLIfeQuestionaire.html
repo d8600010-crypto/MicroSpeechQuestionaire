@@ -1,1 +1,125 @@
 
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>純淨生活反思問卷</title>
+<style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+    h2 { color: #2c3e50; }
+    .question { margin-bottom: 20px; }
+    .result { margin-top: 30px; padding: 15px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<h2>你過的是「純淨生活」嗎？（不用想太多，直覺回答）</h2>
+<p>請選擇最符合你日常的選項：</p>
+
+<form id="quiz">
+
+<div class="question">
+1️⃣ 你一天中，有幾次是「只是想放空」，卻忍不住滑手機？
+<br>
+<input type="radio" name="q1" value="3"> 幾乎每次  
+<input type="radio" name="q1" value="2"> 偶爾  
+<input type="radio" name="q1" value="1"> 很少  
+<input type="radio" name="q1" value="0"> 幾乎沒有  
+</div>
+
+<div class="question">
+2️⃣ 吃完一餐後，你最常的感覺是？
+<br>
+<input type="radio" name="q2" value="3"> 想睡、脹、沒精神  
+<input type="radio" name="q2" value="2"> 還好但有點重  
+<input type="radio" name="q2" value="1"> 普通  
+<input type="radio" name="q2" value="0"> 輕鬆、有精神  
+</div>
+
+<div class="question">
+3️⃣ 睡前最後30分鐘，你通常在做什麼？
+<br>
+<input type="radio" name="q3" value="3"> 滑手機/看影片  
+<input type="radio" name="q3" value="2"> 還是用3C但較少  
+<input type="radio" name="q3" value="1"> 偶爾不用  
+<input type="radio" name="q3" value="0"> 幾乎不用3C  
+</div>
+
+<div class="question">
+4️⃣ 你有沒有「明明很累，但停不下來」的狀態？
+<br>
+<input type="radio" name="q4" value="3"> 常常  
+<input type="radio" name="q4" value="2"> 偶爾  
+<input type="radio" name="q4" value="1"> 很少  
+<input type="radio" name="q4" value="0"> 幾乎沒有  
+</div>
+
+<div class="question">
+5️⃣ 一天之中，你有多久是「完全沒有被打擾」的？
+<br>
+<input type="radio" name="q5" value="3"> 幾乎沒有  
+<input type="radio" name="q5" value="2"> 少於30分鐘  
+<input type="radio" name="q5" value="1"> 約30-60分鐘  
+<input type="radio" name="q5" value="0"> 超過1小時  
+</div>
+
+<div class="question">
+6️⃣ 當你壓力大時，你通常？
+<br>
+<input type="radio" name="q6" value="3"> 忍住或忽略  
+<input type="radio" name="q6" value="2"> 用滑手機/吃東西轉移  
+<input type="radio" name="q6" value="1"> 偶爾會釋放  
+<input type="radio" name="q6" value="0"> 有固定釋放方式  
+</div>
+
+<div class="question">
+7️⃣ 你多久會「刻意讓自己慢下來」？
+<br>
+<input type="radio" name="q7" value="3"> 幾乎沒有  
+<input type="radio" name="q7" value="2"> 偶爾  
+<input type="radio" name="q7" value="1"> 一週幾次  
+<input type="radio" name="q7" value="0"> 幾乎每天  
+</div>
+
+<div class="question">
+8️⃣ 你喝飲料（含糖或咖啡）多於水嗎？
+<br>
+<input type="radio" name="q8" value="3"> 是  
+<input type="radio" name="q8" value="2"> 有時  
+<input type="radio" name="q8" value="1"> 偶爾  
+<input type="radio" name="q8" value="0"> 幾乎不會  
+</div>
+
+<button type="button" onclick="calculateScore()">看結果</button>
+
+</form>
+
+<div class="result" id="result"></div>
+
+<script>
+function calculateScore() {
+    let total = 0;
+    for (let i = 1; i <= 8; i++) {
+        let q = document.querySelector('input[name="q' + i + '"]:checked');
+        if (q) {
+            total += parseInt(q.value);
+        }
+    }
+
+    let resultText = "";
+
+    if (total >= 18) {
+        resultText = "⚠️ 你的生活雜訊很高：你不是不健康，而是被過多干擾包圍。建議從『減少一個干擾』開始。";
+    } else if (total >= 10) {
+        resultText = "🔄 你正在半純淨狀態：已經有意識，但還有不少隱性負擔。可以優化一個習慣。";
+    } else {
+        resultText = "✨ 你的生活相對純淨：你已經建立不錯的節奏，請持續維持。";
+    }
+
+    document.getElementById("result").innerHTML = "<h3>你的分數：" + total + "</h3><p>" + resultText + "</p>";
+}
+</script>
+
+</body>
+</html>
